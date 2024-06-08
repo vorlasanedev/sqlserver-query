@@ -1,5 +1,6 @@
 # sqlserver-query
 ## insert into with lef-join many table
+## trigger database After Insert Table
 ```
 USE [KKL]
 GO
