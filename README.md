@@ -3225,3 +3225,72 @@ end
 
 
 ```
+
+## procedure Collection money
+```
+USE [KKL]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_save_collection_return]    Script Date: 08/06/2024 10:53:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--exec dbo.sp_appr_plan @co_cd,@req_no,@emp_no,@coments
+ALTER procedure [dbo].[sp_save_collection_return]  
+       (
+	        @bill_no varchar (100),
+	        @roundid nvarchar (50),
+	        @cust_owner nvarchar (50)  ,
+	        @amt decimal (22, 3),
+         @fee decimal (22, 3),
+	        @memo nvarchar (2000)
+       )
+as 
+begin
+
+  INSERT INTO LCO400
+  (
+    seq,inv_no,bill_no,roundid,cust_dealer,col_dt,ac_dt,pay_ty,
+    pay_cls,amt, fee,cur_bc,ex_usd,ex_thb,tot_amt,memo,pc_code,ac_cd,insert_fr,cid,cdt
+  )
+  values( (select isnull(max(seq),0)+1 from lco400_test where @cust_owner=@cust_owner and roundid=@roundid),@bill_no,'',@roundid,@cust_owner,getdate(),getdate(),'KPS60020',
+    'FI200200',@amt,@fee,'BC400LAK',0,0,@amt,@memo,'KL100',NULL,'FROM APP',1,getdate()) 
+
+end
+```
+
+## procedure Update FCM TOKEN
+```
+USE [KKL]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_update_cfm_token]    Script Date: 08/06/2024 10:54:59 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+---old use --
+ALTER procedure [dbo].[sp_update_cfm_token] 
+       (
+         @user_id varchar(50),
+         @fcm_token nvarchar(max)
+       )
+as 
+begin
+
+  IF EXISTS (SELECT 1 FROM ltc120 where user_id=@user_id)
+    BEGIN 
+      update LTC120 set 
+         fcm_token=@fcm_token         
+      where user_id=@user_id
+       
+      end
+   else begin 
+      INSERT INTO LTC120 (user_id, fcm_token)
+      VALUES(@user_id, @fcm_token)
+    
+   end
+
+end
+  
+
+```
