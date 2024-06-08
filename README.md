@@ -3260,6 +3260,7 @@ end
 ```
 
 ## procedure Update FCM TOKEN
+Image\FCM-Token.png
 ```
 USE [KKL]
 GO
