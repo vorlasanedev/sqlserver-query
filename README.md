@@ -1,5 +1,5 @@
 # sqlserver-query
-##insert into with lef-join many table
+## insert into with lef-join many table
 ```
 USE [KKL]
 GO
