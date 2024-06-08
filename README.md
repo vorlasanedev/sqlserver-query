@@ -35,3 +35,62 @@ BEGIN
 END
 
 ```
+
+## Trigger Delete
+```
+USE [KKL]
+GO
+/****** Object:  Trigger [dbo].[TRG_BEF_DEL_LTU100]    Script Date: 08/06/2024 10:02:19 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+ALTER TRIGGER [dbo].[TRG_BEF_DEL_LTU100]
+   ON  [dbo].[LTU110] 
+  for DELETE
+AS 
+BEGIN
+	
+INSERT INTO dbo.LTU110_BK
+           (pay_no
+           ,bill_no
+           ,cust_dealer
+           ,vat
+           ,amt
+           ,pay_dt
+           ,pay_by
+           ,pay_on_round
+           ,pay_ty
+           ,rmk
+           ,insert_fr
+           ,device_id
+           ,cdt
+           ,mdt
+           ,pid)
+  select
+            pay_no 
+           ,bill_no
+           ,cust_dealer
+           ,vat
+           ,amt
+           ,pay_dt
+           ,pay_by
+           ,pay_on_round
+           ,pay_ty
+           ,rmk
+           ,insert_fr
+           ,device_id
+           ,cdt
+           ,mdt
+           ,pid
+     FROM DELETED     
+
+
+	END
+
+```
