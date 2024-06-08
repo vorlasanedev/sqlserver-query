@@ -3261,6 +3261,7 @@ end
 
 ## procedure Update FCM TOKEN
 <img src="Image\FCM-Token.png" width="400" alt="Laravel Logo">
+
 ```
 USE [KKL]
 GO
@@ -3293,5 +3294,4 @@ begin
 
 end
   
-
 ```
